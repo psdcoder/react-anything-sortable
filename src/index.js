@@ -31,6 +31,7 @@ const Sortable = React.createClass({
      *   //dataSet sorted
      * }
      */
+    tag: PropTypes.string,
     onSort: PropTypes.func,
     className: PropTypes.string,
     sortHandle: PropTypes.string,
@@ -495,23 +496,19 @@ const Sortable = React.createClass({
   render() {
     const className = `ui-sortable ${this.props.className || ''}`;
 
-    return (
-      <div className={className}>
-        {this.renderItems()}
-      </div>
-    );
+    return React.createElement(this.props.tag || 'div', { className }, this.renderItems());
   }
 });
 
 const SortableContainer = ({
-  className, style, onMouseDown, onTouchStart, children,
+  className, style, onMouseDown, onTouchStart, children, tag,
 }) => {
   if (React.isValidElement(children)) {
     return React.cloneElement(children, {
       className, style, onMouseDown, onTouchStart
     });
   } else {
-    return React.createElement('div', {
+    return React.createElement(tag || 'div', {
       className, style, onMouseDown, onTouchStart, children
     });
   }
